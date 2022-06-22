@@ -13,5 +13,8 @@
   "license": "ISC",
   "devDependencies": {
     "serverless-offline": "^8.8.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7"
   }
 }
