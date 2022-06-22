@@ -7,4 +7,4 @@ jspm_packages
 
 # Others
 .DS_Store
-#.env
+.env
