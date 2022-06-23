@@ -1,7 +1,7 @@
 
 /**
  * @class
- * Esta clase recibe en el constructor una instancia del modelo People y devuelve una nueva instancia que contiene únicamente los campos que se desean mostrar
+ * Esta clase recibe en el constructor el body del request y devuelve una nueva instancia que contiene únicamente los campos que se desean guardar
  */
  class PeopleSaveDTO {
     constructor(requestBody) {

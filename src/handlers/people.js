@@ -7,6 +7,7 @@ module.exports.list = async (event) => {
     const result = await peopleService.getAll();
     const response = {
       statusCode: 200,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
         {
           message: "Personajes obtenidos satisfactoriamente",
@@ -27,13 +28,14 @@ module.exports.create = async (event) => {
     const { body, headers } = event;
     const jsonData = JSON.parse(body);
     const dto = new PeopleSaveDTO(jsonData);
-    const result = peopleService.save(dto);
+    const result = await peopleService.save(dto);
     const response = {
       statusCode: 201,
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(
         {
           message: "Personaje registrado satisfactoriamente",
-          result,
+          result
         },
         null,
         2
@@ -41,7 +43,7 @@ module.exports.create = async (event) => {
     };
     return response;
   } catch (error) {
-    return errorHandler(error); 
+    return errorHandler(error);
   }
 };
 
@@ -49,6 +51,7 @@ function errorHandler(error) {
   console.error(error);
   const response = {
     statusCode: 400,
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       message: error.message,
       success: false,

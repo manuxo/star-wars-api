@@ -1,92 +1,51 @@
-<!--
-title: 'AWS Simple HTTP Endpoint example in NodeJS'
-description: 'This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.'
-layout: Doc
-framework: v3
-platform: AWS
-language: nodeJS
-authorLink: 'https://github.com/serverless'
-authorName: 'Serverless, inc.'
-authorAvatar: 'https://avatars1.githubusercontent.com/u/13742415?s=200&v=4'
--->
+# Star Wars API demo
 
-# Serverless Framework Node HTTP API on AWS
+## Setup
 
-This template demonstrates how to make a simple HTTP API with Node.js running on AWS Lambda and API Gateway using the Serverless Framework.
+Se está utilizando un archivo .env para almacenar las variables de la base de datos, ya que no se incluye en el repositorio.
+Se debe crear un archivo .env en el directorio raíz en la carpeta local y colocar las siguientes variables:
 
-This template does not include any kind of persistence (database). For more advanced examples, check out the [serverless/examples repository](https://github.com/serverless/examples/) which includes Typescript, Mongo, DynamoDB and other examples.
-
-## Usage
-
-### Deployment
-
+.env file
 ```
-$ serverless deploy
+MYSQL_HOST=string
+MYSQL_USER=string
+MYSQL_PASSWORD=string
+MYSQL_DATABASE=string
+MYSQL_PORT=number
 ```
 
-After deploying, you should see output similar to:
-
-```bash
-Deploying aws-node-http-api-project to stage dev (us-east-1)
-
-✔ Service deployed to stack aws-node-http-api-project-dev (152s)
-
-endpoint: GET - https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/
-functions:
-  hello: aws-node-http-api-project-dev-hello (1.9 kB)
+Comandos para poder ejecutar el api en local:
+```
+> npm install
+> serverless offline
 ```
 
-_Note_: In current form, after deployment, your API is public and can be invoked by anyone. For production deployments, you might want to configure an authorizer. For details on how to do that, refer to [http event docs](https://www.serverless.com/framework/docs/providers/aws/events/apigateway/).
+## Deploy
 
-### Invocation
-
-After successful deployment, you can call the created application via HTTP:
-
-```bash
-curl https://xxxxxxx.execute-api.us-east-1.amazonaws.com/
+El serverless.yml está configurado con un custom profile para la cuenta personal de AWS.
+```
+...
+custom:
+  profiles:
+    dev: personalAccount
+...
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  stage: ${opt:stage, 'dev'}
+  profile: ${self:custom.profiles.${self:provider.stage}}
+...
 ```
 
-Which should result in response similar to the following (removed `input` content for brevity):
-
-```json
-{
-  "message": "Go Serverless v2.0! Your function executed successfully!",
-  "input": {
-    ...
-  }
-}
-```
-
-### Local development
-
-You can invoke your function locally by using the following command:
-
-```bash
-serverless invoke local --function hello
-```
-
-Which should result in response similar to the following:
+Para crear un profile con el nombre personalAccount, se debe ejecutar el siguiente comando:
 
 ```
-{
-  "statusCode": 200,
-  "body": "{\n  \"message\": \"Go Serverless v3.0! Your function executed successfully!\",\n  \"input\": \"\"\n}"
-}
+> serverless config credentials --provider provider --key aws_access_key_id --secret aws_secret_access_key --profile personalAccount
 ```
 
-
-Alternatively, it is also possible to emulate API Gateway and Lambda locally by using `serverless-offline` plugin. In order to do that, execute the following command:
-
-```bash
-serverless plugin install -n serverless-offline
-```
-
-It will add the `serverless-offline` plugin to `devDependencies` in `package.json` file as well as will add it to `plugins` in `serverless.yml`.
-
-After installation, you can start local emulation with:
+Una vez configurado el profile correctamente, se hace el despliegue:
 
 ```
-serverless offline
+> serverless deploy --stage dev 
 ```
-
-To learn more about the capabilities of `serverless-offline`, please refer to its [GitHub repository](https://github.com/dherault/serverless-offline).

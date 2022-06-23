@@ -22,15 +22,14 @@ const peopleRepository = {
 
     /**
      * Registra un personaje de Star Wars en la base de datos
-     * @return {[any]}      Retorna el personaje registrado
+     * @return {[any]}      Retorna los datos registrados
      */
     async save(data) {
         try {
-            const inserted = await knex.insert(data)
-                .returning()
+            await knex.insert(data)
                 .insert(data)
                 .into('people');
-            return inserted;
+            return data;
         } catch (error) {
             return Promise.reject(error);
         }

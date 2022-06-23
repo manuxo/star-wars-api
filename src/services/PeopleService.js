@@ -22,7 +22,7 @@ let peopleService = {
                 const people = peopleFromDatabase.concat(peopleFromSwapi);
                 return people;
             }
-            return Promise.reject(new Error('Ha fallado la llamada al SWAPI'));
+            return Promise.reject(new Error('Ha fallado la petición HTTP al Star Wars API'));
         } catch (error) {
             return Promise.reject(error);
         }
@@ -35,7 +35,7 @@ let peopleService = {
     save: async function (peopleSaveDTO) {
         try {
             // TO DO: Add some validation before save
-            const people = peopleRepository.save(peopleSaveDTO);
+            const people = await peopleRepository.save(peopleSaveDTO);
             return people;
         } catch (error) {
             return Promise.reject(error);

@@ -16,6 +16,12 @@ provider:
   region: us-east-1
   stage: ${opt:stage, 'dev'}
   profile: ${self:custom.profiles.${self:provider.stage}}
+  environment:
+    MYSQL_HOST: ${env:MYSQL_HOST}
+    MYSQL_PORT: ${env:MYSQL_PORT}
+    MYSQL_USER: ${env:MYSQL_USER}
+    MYSQL_PASSWORD: ${env:MYSQL_PASSWORD}
+    MYSQL_DATABASE: ${env:MYSQL_DATABASE}
 
 functions:
   listPeople:
