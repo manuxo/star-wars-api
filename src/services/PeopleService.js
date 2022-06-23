@@ -1,13 +1,14 @@
 const fetch = require('node-fetch');
 const constants = require('../common/Constants');
 const { PeopleDTO } = require('../dtos/PeopleDTO');
+const peopleRepository = require('../repositories/PeopleRepository');
 
 /**
  * Servicio de personajes de Star Wars
  */
 let peopleService = {
     /**
-     * Devuelve todos los personajes de Star Wars registrados
+     * Devuelve todos los personajes de Star Wars
      * @return {[any]}      Retorna un array de personajes
      */
     getAll: async function () {
@@ -16,7 +17,9 @@ let peopleService = {
             if (response.ok) {
                 const jsonResponse = await response.json();
                 let { results } = jsonResponse;
-                const people = results.map(p => new PeopleDTO(p));
+                const peopleFromDatabase = await peopleRepository.getAll();
+                const peopleFromSwapi = results.map(p => new PeopleDTO(p))
+                const people = peopleFromDatabase.concat(peopleFromSwapi);
                 return people;
             }
             return Promise.reject(new Error('Ha fallado la llamada al SWAPI'));
@@ -30,7 +33,13 @@ let peopleService = {
      * @return {[any]} Retorna el personaje registrado
      */
     save: async function (peopleSaveDTO) {
-        throw new Error("Not implemented");
+        try {
+            // TO DO: Add some validation before save
+            const people = peopleRepository.save(peopleSaveDTO);
+            return people;
+        } catch (error) {
+            return Promise.reject(error);
+        }
     }
 }
 

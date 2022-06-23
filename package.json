@@ -12,9 +12,12 @@
   "author": "Manuel Alvarado Estanga",
   "license": "ISC",
   "devDependencies": {
+    "serverless": "^3.19.0",
     "serverless-offline": "^8.8.0"
   },
   "dependencies": {
+    "knex": "^2.1.0",
+    "mysql2": "^2.3.3",
     "node-fetch": "^2.6.7"
   }
 }

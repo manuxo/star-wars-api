@@ -6,8 +6,8 @@
 class PeopleDTO {
     constructor(peopleModel) {
         this.nombre = peopleModel.name;
-        this.estatura = peopleModel.height;
-        this.peso = peopleModel.mass;
+        this.estatura = +peopleModel.height;
+        this.peso = +peopleModel.mass;
         this.color_cabello = peopleModel.hair_color;
         this.color_ojos = peopleModel.eye_color;
         this.genero = peopleModel.gender;
