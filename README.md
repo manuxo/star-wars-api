@@ -41,7 +41,7 @@ provider:
 Para crear un profile con el nombre personalAccount, se debe ejecutar el siguiente comando:
 
 ```
-> serverless config credentials --provider provider --key aws_access_key_id --secret aws_secret_access_key --profile personalAccount
+> serverless config credentials --provider aws --key aws_access_key_id --secret aws_secret_access_key --profile personalAccount
 ```
 
 Una vez configurado el profile correctamente, se hace el despliegue:
