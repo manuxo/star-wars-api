@@ -50,7 +50,7 @@ Para crear un profile con el nombre personalAccount, se debe ejecutar el siguien
 Una vez configurado el profile correctamente, se hace el despliegue:
 
 ```
-> serverless deploy --stage dev 
+> serverless deploy 
 ```
 
 ## Base de datos
