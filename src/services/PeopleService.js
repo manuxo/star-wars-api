@@ -34,7 +34,7 @@ let peopleService = {
      */
     save: async function (peopleSaveDTO) {
         try {
-            // TO DO: Add some validation before save
+            // TO DO: Agregar validación de los datos
             const people = await peopleRepository.save(peopleSaveDTO);
             return people;
         } catch (error) {
