@@ -19,6 +19,7 @@
     "serverless-offline": "^8.8.0"
   },
   "dependencies": {
+    "joi": "^17.6.0",
     "knex": "^2.1.0",
     "mysql2": "^2.3.3",
     "node-fetch": "^2.6.7"

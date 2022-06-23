@@ -1,6 +1,7 @@
 const fetch = require('node-fetch');
 const constants = require('../common/Constants');
 const { PeopleDTO } = require('../dtos/PeopleDTO');
+const peopleSchema = require('../schemas/PeopleSchema');
 const peopleRepository = require('../repositories/PeopleRepository');
 
 /**
@@ -34,8 +35,9 @@ let peopleService = {
      */
     save: async function (peopleSaveDTO) {
         try {
-            // TO DO: Agregar validación de los datos
-            const people = await peopleRepository.save(peopleSaveDTO);
+            // Valida con Joi.js los campos requeridos y tipos de datos, si encuentra errores lanza una exception del tipo ValidationError
+            const validated = await peopleSchema.validateAsync(peopleSaveDTO);
+            const people = await peopleRepository.save(validated);
             return people;
         } catch (error) {
             return Promise.reject(error);

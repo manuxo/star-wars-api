@@ -1,6 +1,7 @@
 "use strict";
 const { PeopleSaveDTO } = require('../dtos/PeopleSaveDTO');
 const peopleService = require('../services/PeopleService');
+const { ValidationError } = require('joi');
 
 module.exports.list = async (event) => {
   try {
@@ -49,6 +50,15 @@ module.exports.create = async (event) => {
 
 function errorHandler(error) {
   console.error(error);
+  let message = "";
+  if (error.isJoi) {
+    console.log("Joi error => ", error)
+    for (const d in error.details) {
+      message += `${d.message}\n`;
+    }
+  } else {
+    message = error.message;
+  }
   const response = {
     statusCode: 400,
     headers: { "Content-Type": "application/json" },
