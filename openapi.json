@@ -1,0 +1,183 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Star Wars Demo API",
+    "version": "1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Serverless Offline server"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "GetPeopleResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "result": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "nombre": {
+                  "type": "string"
+                },
+                "estatura": {
+                  "type": "number"
+                },
+                "peso": {
+                  "type": "number"
+                },
+                "color_cabello": {
+                  "type": "string"
+                },
+                "color_ojos": {
+                  "type": "string"
+                },
+                "genero": {
+                  "type": "string"
+                },
+                "anio_nacimiento": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "message": "Personajes obtenidos satisfactoriamente",
+          "result": [
+            {
+              "nombre": "Anakin Skywalker",
+              "estatura": 176,
+              "peso": 80,
+              "color_cabello": "blond",
+              "color_ojos": "blue",
+              "genero": "male",
+              "anio_nacimiento": "19BBY"
+            }
+          ]
+        }
+      },
+      "PostPeopleRequest": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string"
+          },
+          "estatura": {
+            "type": "number"
+          },
+          "peso": {
+            "type": "number"
+          },
+          "color_cabello": {
+            "type": "string"
+          },
+          "color_ojos": {
+            "type": "string"
+          },
+          "genero": {
+            "type": "string"
+          },
+          "anio_nacimiento": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "nombre": "Anakin Skywalker",
+          "estatura": 176,
+          "peso": 80,
+          "color_cabello": "blond",
+          "color_ojos": "blue",
+          "genero": "male",
+          "anio_nacimiento": "19BBY"
+        }
+      },
+      "BadRequestResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "result": {
+            "type": "object"
+          }
+        },
+        "example": {
+          "message": "Mensaje de error",
+          "result": null
+        }
+      }
+    },
+    "securitySchemes": {}
+  },
+  "paths": {
+    "api/people": {
+      "get": {
+        "summary": "Obtener personajes",
+        "responses": {
+          "200": {
+            "description": "Personajes obtenidos satisfactoriamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPeopleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudieron obtener los personajes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Registrar un nuevo personaje",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PostPeopleRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Personaje registrado satisfactoriamente",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPeopleResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "No se pudo registrar el personaje",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BadRequestResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
